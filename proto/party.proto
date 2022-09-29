@@ -1,0 +1,88 @@
+syntax = "proto3";
+package partyProto;
+
+service PartyService {
+
+    // 加入派对
+    rpc JoinMetaParty (JoinMetaPartyReq) returns (MetaParty) {}
+}
+
+message JoinMetaPartyReq {
+    string partyId = 1;
+    string userId = 2;
+    string appVersion = 3;
+    string appLanguage = 4;
+    //#JoinMetaPartyReq.followUid.desc: 跟随的用户ID#
+    string followUid = 5;
+}
+
+message MetaParty {
+    string partyId = 1;
+    //#MetaParty.type.desc: 类型#
+    int32 type = 2;
+    //#MetaParty.name.desc: 派对名称#
+    string name = 3;
+    //#MetaParty.teamId.desc: 群聊ID#
+    string teamId = 4;
+    //#MetaParty.onlineMembers.desc: 在线成员#
+    repeated MetaPartyUser onlineMembers = 5;
+    //#MetaParty.maxCount.desc: 最大成员数#
+    int32 maxCount = 6;
+    //#MetaParty.family.desc: 家族信息#
+    FamilyData family = 7;
+    //#MetaParty.sceneId.desc: 场景ID#
+    string sceneId = 8;
+    //#MetaParty.convId.desc: 会话ID#
+    string convId = 9;
+    //#MetaParty.rtcId.desc: RtcID#
+    string rtcId = 10;
+}
+
+message MetaPartyUser {
+    string userId = 1;
+    string avatarUrl = 2;
+    int32 sex = 3;
+    int32 age = 4;
+    //#MetaPartyUser.rls.desc: 关系：0-无；1-好友；……#
+    int32 rls = 5;
+    string name = 6;
+}
+
+message FamilyData {
+    // #FamilyData.familyId.desc:家族id#
+    string familyId = 1;
+    // #FamilyData.name.desc:家族名#
+    string name = 2;
+    // #FamilyData.iconUrl.desc:家族icon#
+    string iconUrl = 3;
+    // #FamilyData.founder.desc:家族创始人#
+    string founder = 4;
+    // #FamilyData.notice.desc:家族公告#
+    string notice = 5;
+    // #FamilyData.level.desc:家族等级#
+    int32 level = 6;
+    // #FamilyData.integral.desc:家族当前积分#
+    int64 integral = 7;
+    // #FamilyData.relegationProgress.desc:保级进度#
+    string relegationProgress = 8;
+    // #FamilyData.nextLevelIntegral.desc:家族下个等级所需积分#
+    int64 nextLevelIntegral = 9;
+    // #FamilyData.status.desc:家族状态  0=待激活 1=生效中 2=已失效(需提示) 3=已解散#
+    int32 status = 10;
+    // #FamilyData.role.desc:用户角色  0=游客 1=族长 2=副族长 3=普通家族成员#
+    int32 role = 11;
+    // #FamilyData.membersCount.desc:成员数量#
+    int32 membersCount = 12;
+    // #FamilyData.maxMembersCount.desc:最大成员数量#
+    int32 maxMembersCount = 13;
+    // #FamilyData.createTime.desc:家族创建时间#
+    int32 createTime = 14;
+    // #FamilyData.shareUrl.desc:家族分享链接#
+    string shareUrl = 15;
+    // #FamilyData.inviteUrl.desc:家族邀请链接#
+    string inviteUrl = 16;
+    // #FamilyData.teamId.desc:家族群聊id#
+    string teamId = 17;
+    // #FamilyData.convId.desc:家族群聊会话id#
+    string convId = 18;
+}
