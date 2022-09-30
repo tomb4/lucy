@@ -5,6 +5,16 @@ service PartyService {
 
     // 加入派对
     rpc JoinMetaParty (JoinMetaPartyReq) returns (MetaParty) {}
+
+    // 退出派对
+    rpc ExitMetaParty (ExitMetaPartyReq) returns (Nil) {}
+}
+
+message Nil {}
+
+message ExitMetaPartyReq {
+    string userId = 1;
+    string partyId =2;
 }
 
 message JoinMetaPartyReq {

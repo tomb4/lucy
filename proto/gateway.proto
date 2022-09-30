@@ -1,0 +1,282 @@
+syntax = "proto3";
+package MetaGateway;
+
+//100以内都是客户端主动发送的
+//100-200是服务端主动发送的
+enum CmdId{
+  UnKnown = 0;
+  PingCmdId = 1;
+  PongCmdId = 2;
+  LoginReqCmdId = 11;
+  LoginRespCmdId = 12;
+  LoginAckCmdId = 13; //客户端收到登录成功的返回后的回复
+  LogoutReqCmdId = 15;
+  LogoutRespCmdId = 16;
+  ClientStateEventReqCmdId = 21;
+  ClientStateEventRespCmdId = 22;
+
+  SendMessageReqCmdId = 31;
+  SendMessageRespCmdId = 32;
+  SyncMessageReqCmdId = 33;
+  SyncMessageRespCmdId = 34;
+  SyncHistoryMessageReqCmdId = 35; //拉取历史消息
+  SyncHistoryMessageRespCmdId = 36;
+
+  //小游戏
+  ClientPassThroughEventReqCmdId = 45; //闯关游戏
+  ClientPassThroughEventRespCmdId = 46;
+
+
+  BroadcastStateEventReqCmdId = 101;
+  BroadcastStateEventRespCmdId = 102;
+  SceneChangeReqCmdId = 103; //场景切换
+  SceneChangeRespCmdId = 104;
+  BroadcastPassThroughEventReqCmdId = 109; //闯关游戏
+  BroadcastPassThroughEventRespCmdId = 110;
+
+  SyncMessageNotifyCmdId = 191; //拉消息通知
+}
+
+message Nil{
+
+}
+
+//基本数据格式，可以接收所有的数据报文，用来处理一些基础逻辑（比如：全局打印日志、对reqId做重复检测）
+message BaseReq{
+  int64 reqId = 101; //请求的唯一id，请使用雪花id
+}
+message BaseResp{
+  int64 respId = 101; //透传的请求id
+  int32 code = 102; // 如果code!=0 代表本次处理有错误，返回的是错误码
+  string message = 103; // 错误原因
+}
+
+message Ping{
+  int64 reqId = 101; //请求的唯一id，请使用雪花id
+}
+message Pong{
+  int64 ts = 1; //服务端当前时间戳
+  int64 respId = 101; //透传的请求id
+  int32 code = 102; // 如果code!=0 代表本次处理有错误，返回的是错误码
+  string message = 103; // 错误原因
+}
+
+//登陆
+message LoginReq{
+  int32 userId = 1; //用户id
+  string token = 2; //token
+  bytes aesKey = 3; //16字节的秘钥
+  int32 type = 4; //连接类型  1-游戏连接 2-im连接
+  int32 loginType = 5; //登陆类型 1-连接重连 2-重新打开app新建连接
+  int64 reqId = 101; //请求的唯一id，请使用雪花id
+}
+message LoginResp{
+  int64 respId = 101; //透传的请求id
+  int32 code = 102; // 如果code!=0 代表本次处理有错误，返回的是错误码
+  string message = 103; // 错误原因
+}
+message LoginAck{
+  int32 loginType = 5; //登陆类型 1-连接重连 2-重新打开app新建连接
+  int64 reqId = 101; //请求的唯一id，请使用雪花id
+}
+
+message LogoutReq{
+  int64 reqId = 101; //请求的唯一id，请使用雪花id
+}
+
+message LogoutResp{
+  int64 respId = 101; //透传的请求id
+  int32 code = 102; // 如果code!=0 代表本次处理有错误，返回的是错误码
+  string message = 103; // 错误原因
+}
+
+// ↓↓↓↓↓↓↓↓↓↓↓ im相关 ↓↓↓↓↓↓↓↓↓↓
+message SendMessageReq{
+  int32 messageType = 1;
+  string clientMsgId = 4;
+  string content = 6;
+  string convId = 7; //会话id
+  int32 convType = 8; //会话类型 1-单聊 2-群聊 3-聊天室
+  int64 reqId = 101; //请求的唯一id，请使用雪花id
+}
+message SendMessageResp{
+  string serverMsgId = 1; //服务端生成的消息id
+  string clientMsgId = 4;
+  int64 respId = 101; //透传的请求id
+  int32 code = 102; // 如果code!=0 代表本次处理有错误，返回的是错误码
+  string message = 103; // 错误原因
+}
+message Message{
+  string convId = 1;
+  int32 convType = 2;
+  int64 cursor = 3;
+  int32 messageType = 4;
+  int32 senderId = 5;
+  string clientMsgId = 7;
+  string serverMsgId = 8;
+  string content = 9;
+  int64 createdAt = 10;
+}
+message SyncMessageReq{
+  int32 convType = 2;
+  int64 cursor = 4; //上一次的游标
+  int64 reqId = 101; //请求的唯一id，请使用雪花id
+}
+message SyncMessageResp{
+  repeated Message msgs = 1;
+  int32 more = 2; //有更多消息需要拉取 1-是  2-没有
+  int32 convType = 3;
+  int64 respId = 101; //透传的请求id
+  int32 code = 102; // 如果code!=0 代表本次处理有错误，返回的是错误码
+  string message = 103; // 错误原因
+}
+
+
+message SyncHistoryMessageReq{
+  int32 userId = 3;
+  string convId = 4;
+  int64 cursor = 5;
+  repeated int32 messageType = 6;
+  int64 reqId = 101; //请求的唯一id，请使用雪花id
+}
+
+message SyncHistoryMessageResp{
+  repeated Message msgs = 1;
+  int64 respId = 101; //透传的请求id
+  int32 code = 102; // 如果code!=0 代表本次处理有错误，返回的是错误码
+  string message = 103; // 错误原因
+}
+
+message SyncMessageNotifyReq{
+  int32 convType = 1; //会话类别
+  repeated int32 targetUserId = 2;
+  int64 reqId = 101; //请求的唯一id，请使用雪花id
+}
+
+// ↑↑↑↑↑↑↑↑↑↑↑im相关↑↑↑↑↑↑↑↑↑↑↑↑
+
+
+//↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ 状态同步相关 ↓ ↓ ↓ ↓
+//message Point{
+//  float x = 1;
+//  float y = 2;
+//  float z = 3;
+//}
+//用户属性
+message UserStateEvent{
+  //  Point endPoint = 1; //寻路终点
+  //  repeated Point pathPoint = 2; //路径点  当用户寻路发生变化时会更新寻路点，内容是所有的途经点
+  //  Point now = 3; //用户当前位置
+  //  int32 action = 4; // 动作：1-移动；2-停止
+  float x = 1;
+  float y = 2;
+  float z = 3;
+  repeated float direction = 4; //面部朝向
+  int32 onlineStatus = 7; //在线状态 1-在线 2-下线 3-掉线
+  int32 userId = 8;
+  string actionStatus = 10; //
+  int32 from = 11; //事件发送人  -1=服务器触发  如果是用户触发，则是用户的userId 此字段不需要客户端填，服务端会自行填写
+  //  string localPosition = 16; //本地位置id
+}
+//场景变化
+message SceneChangeReq{
+  int32 sceneType = 1; //场景类型  1-大厅 5-闯关游戏
+  string sceneId = 2; //场景id
+  string rtcId = 3; //rtcId
+  string chatId = 5; //聊天室Id
+  string convId = 7; //会话id
+  int32 exit = 6; //1-退出当前场景
+  int32 userId = 4; //客户端忽略，服务端自用    目标用户id，如果此字段存在时忽略sceneId
+  int64 reqId = 101; //请求的唯一id，请使用雪花id
+}
+
+//闯关游戏
+message PassThroughUser{
+  UserStateEvent user = 1;
+  int32 pass = 2; //通过关卡 1-代表通过
+}
+message PassThroughLevel{
+  int32 levelId = 1; //关卡级别
+  map<string, PassThroughLevelFifth> fifth = 3; //第五关的配置
+}
+message PassThroughLevelFifth{
+  string id = 1;
+  float x = 2;
+  float y = 3;
+  float z = 4;
+  int32 isReal = 5; //是不是可以行走的地块  1-是 2-不是
+}
+message ClientPassThroughEventReq{
+  PassThroughUser user = 1;
+  int64 reqId = 101; //请求的唯一id，请使用雪花id
+}
+
+message BroadcastPassThroughEventReq{
+  map<int32, PassThroughLevel> level = 1; //游戏关卡
+  repeated PassThroughUser user = 2; //用户列表
+  int64 gameBeginTimeRemaining = 5; //游戏开始剩余时间 ms
+  int32 gameState = 6; //游戏状态 1-等待开始 2-游戏中 3-游戏结束
+  repeated int32 targetUserIds = 10; //客户端忽略，服务端自用    目标用户id，如果此字段存在时忽略sceneId
+  int64 reqId = 101; //请求的唯一id，请使用雪花id
+}
+
+//卡座包厢
+message Box{
+  string id = 1; //包厢id  A1 A2? 客户端定义的
+  string subspaceId = 2; //服务端定义的卡座id
+  string teamId = 5; //群聊id
+  string rtcId = 3; //
+  string convId = 6; //会话id
+  map<int32, int32> seat = 4; //座位上的人  如果非0则代表有人
+}
+
+//客户端状态变化
+message ClientStateEventReq{
+  UserStateEvent user = 1;
+  int64 reqId = 101; //请求的唯一id，请使用雪花id
+}
+message ClientStateEventResp{
+  int64 respId = 101; //透传的请求id
+  int32 code = 102; // 如果code!=0 代表本次处理有错误，返回的是错误码
+  string message = 103; // 错误原因
+}
+
+//服务端同步状态变化
+message BroadcastStateEventReq{
+  repeated UserStateEvent user = 1; //用户状态变化事件列表
+  map<string, Box> box = 2; //卡座
+  repeated int32 targetUserIds = 4; //客户端忽略，服务端自用    目标用户id，如果此字段存在时忽略sceneId
+  int64 reqId = 101; //请求的唯一id，请使用雪花id
+}
+
+message BroadcastStateEventResp{
+  int64 respId = 101; //透传的请求id
+  int32 code = 102; // 如果code!=0 代表本次处理有错误，返回的是错误码
+  string message = 103; // 错误原因
+}
+
+//↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ 状态同步相关↑ ↑ ↑ ↑ ↑ ↑
+
+
+//  for server
+
+//踢出连接
+message KickOutReq{
+  int32 userId = 1;
+  int32 type = 2;
+  string connectionId = 3;
+}
+
+
+service MetaGatewayService {
+  //踢出某个连接
+  rpc KickOut (KickOutReq) returns (Nil) {}
+  //拉取消息通知
+  rpc SyncMessageNotify (SyncMessageNotifyReq) returns (Nil) {}
+  //场景切换通知
+  rpc SceneChange (SceneChangeReq) returns (Nil) {}
+  //服务端同步状态变化事件
+  rpc BroadcastStateEvent (BroadcastStateEventReq) returns (BroadcastStateEventResp) {}
+  //闯关游戏
+  rpc BroadcastPassThroughEvent (BroadcastPassThroughEventReq) returns (Nil) {}
+}

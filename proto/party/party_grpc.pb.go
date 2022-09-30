@@ -20,6 +20,8 @@ const _ = grpc.SupportPackageIsVersion7
 type PartyServiceClient interface {
 	// 加入派对
 	JoinMetaParty(ctx context.Context, in *JoinMetaPartyReq, opts ...grpc.CallOption) (*MetaParty, error)
+	// 退出派对
+	ExitMetaParty(ctx context.Context, in *ExitMetaPartyReq, opts ...grpc.CallOption) (*Nil, error)
 }
 
 type partyServiceClient struct {
@@ -39,12 +41,23 @@ func (c *partyServiceClient) JoinMetaParty(ctx context.Context, in *JoinMetaPart
 	return out, nil
 }
 
+func (c *partyServiceClient) ExitMetaParty(ctx context.Context, in *ExitMetaPartyReq, opts ...grpc.CallOption) (*Nil, error) {
+	out := new(Nil)
+	err := c.cc.Invoke(ctx, "/partyProto.PartyService/ExitMetaParty", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PartyServiceServer is the server API for PartyService service.
 // All implementations must embed UnimplementedPartyServiceServer
 // for forward compatibility
 type PartyServiceServer interface {
 	// 加入派对
 	JoinMetaParty(context.Context, *JoinMetaPartyReq) (*MetaParty, error)
+	// 退出派对
+	ExitMetaParty(context.Context, *ExitMetaPartyReq) (*Nil, error)
 	mustEmbedUnimplementedPartyServiceServer()
 }
 
@@ -54,6 +67,9 @@ type UnimplementedPartyServiceServer struct {
 
 func (UnimplementedPartyServiceServer) JoinMetaParty(context.Context, *JoinMetaPartyReq) (*MetaParty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method JoinMetaParty not implemented")
+}
+func (UnimplementedPartyServiceServer) ExitMetaParty(context.Context, *ExitMetaPartyReq) (*Nil, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExitMetaParty not implemented")
 }
 func (UnimplementedPartyServiceServer) mustEmbedUnimplementedPartyServiceServer() {}
 
@@ -86,6 +102,24 @@ func _PartyService_JoinMetaParty_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PartyService_ExitMetaParty_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExitMetaPartyReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PartyServiceServer).ExitMetaParty(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/partyProto.PartyService/ExitMetaParty",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PartyServiceServer).ExitMetaParty(ctx, req.(*ExitMetaPartyReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PartyService_ServiceDesc is the grpc.ServiceDesc for PartyService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -96,6 +130,10 @@ var PartyService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "JoinMetaParty",
 			Handler:    _PartyService_JoinMetaParty_Handler,
+		},
+		{
+			MethodName: "ExitMetaParty",
+			Handler:    _PartyService_ExitMetaParty_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

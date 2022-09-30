@@ -19,13 +19,17 @@ type server struct {
 	pb.PartyServiceServer
 }
 
-// SayHello implements helloworld.GreeterServer
 func (s *server) JoinMetaParty(ctx context.Context, req *pb.JoinMetaPartyReq) (*pb.MetaParty, error) {
 	log.Printf("Received: %v", req.PartyId)
 	return &pb.MetaParty{
 		PartyId: req.PartyId,
 		Name:    "meta",
 	}, nil
+}
+
+func (s *server) ExitMetaParty(ctx context.Context, req *pb.ExitMetaPartyReq) (*pb.Nil, error) {
+	log.Println("exit:", req.UserId)
+	return &pb.Nil{}, nil
 }
 
 func main() {
