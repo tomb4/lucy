@@ -1,6 +1,7 @@
 package simulate
 
 import (
+	"encoding/json"
 	"github.com/imroc/req/v3"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -13,7 +14,9 @@ import (
 
 const (
 	StressMoveMethod = 1 // 多人移动压测
-	HttpServer       = "https://api-test.booyah.cc"
+
+	HttpServer = "https://api-test.booyah.cc"
+
 	//WsServer = "localhost:8888"
 	WsServer = "meta-gateway-test.booyah.cc"
 )
@@ -62,12 +65,35 @@ func NewService() *Service {
 
 	svc.httpCli = req.C()
 	svc.partyCli = pb.NewPartyServiceClient(conn)
-	svc.userList = []User{
-		{Id: "25647", Token: "1a2fd588-4513-423c-bf79-b4b7783b72c0"},
-	}
 	svc.partyId = "31522535"
+	svc.userList = loadUser("./simulate/testdata/user.json")
 
 	return svc
+}
+
+func loadUser(path string) []User {
+	bts, err := os.ReadFile(path)
+	if err != nil {
+		panic(err)
+	}
+
+	users := make([]struct {
+		ID      string `json:"id"`
+		Account struct {
+			Token string `json:"token"`
+		} `json:"account"`
+	}, 0)
+
+	_ = json.Unmarshal(bts, &users)
+
+	userList := make([]User, 0, len(users))
+	for _, v := range users {
+		userList = append(userList, User{
+			Id:    v.ID,
+			Token: v.Account.Token,
+		})
+	}
+	return userList
 }
 
 func (s *Service) Handle(in Input) {
@@ -97,7 +123,7 @@ func (s *Service) StressMove(c int) {
 		_, err := s.httpCli.R().
 			SetHeader("Authorization", "token "+user.Token).
 			SetBodyJsonMarshal(MetaJoinReq{
-				PartyId: "31522535",
+				PartyId: s.partyId,
 			}).
 			SetResult(&resp).
 			Post(HttpServer + "/v1/party/meta/join")
@@ -130,7 +156,7 @@ func (s *Service) Clear() {
 		_, err := s.httpCli.R().
 			SetHeader("Authorization", "token "+user.Token).
 			SetBodyJsonMarshal(MetaExitReq{
-				PartyId: "31522535",
+				PartyId: s.partyId,
 			}).
 			SetResult(&resp).
 			Post(HttpServer + "/v1/party/meta/exit")
