@@ -17,3 +17,6 @@
 
 # binary file
 lucy
+
+# config files
+./simulate/config/

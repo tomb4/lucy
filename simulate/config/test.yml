@@ -1,0 +1,5 @@
+service:
+  partyId: "31522535"
+  httpAddr: "https://api-test.booyah.cc"
+  wsAddr: "meta-gateway-test.booyah.cc"
+  grpcAddr: "localhost:50051"

@@ -14,31 +14,26 @@ import (
 // simulateCmd represents the simulate command
 var simulateCmd = &cobra.Command{
 	Use:   "simulate",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "simulate agent move",
+	Long: `simulate agent move, command method:
+		1-多人移动压测`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("simulate called", args)
+		fmt.Println("start simulating", Method)
 
-		simulate.NewService().Handle(simulate.Input{
-			Method: Method,
-			Count:  Count,
-		})
+		simulate.NewService(Cfg, Count).Handle(Method)
 	},
 }
 
 var (
 	Method int
 	Count  int
+	Cfg    string
 )
 
 func init() {
-	simulateCmd.Flags().IntVarP(&Count, "count", "c", 1, "simulate user count, default 1")
+	simulateCmd.Flags().IntVarP(&Count, "count", "c", 1, "simulate agent count")
 	simulateCmd.Flags().IntVarP(&Method, "method", "m", simulate.StressMoveMethod, "1-多人移动压测")
+	simulateCmd.Flags().StringVarP(&Cfg, "cfg", "f", "./simulate/config/test.yml", "配置文件")
 
 	rootCmd.AddCommand(simulateCmd)
 }

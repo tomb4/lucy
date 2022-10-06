@@ -2,73 +2,61 @@ package simulate
 
 import (
 	"encoding/json"
-	"github.com/imroc/req/v3"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 	"log"
 	pb "lucy/proto/party"
 	"os"
 	"os/signal"
 	"time"
+
+	"github.com/imroc/req/v3"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 const (
 	StressMoveMethod = 1 // 多人移动压测
-
-	HttpServer = "https://api-test.booyah.cc"
-
-	//WsServer = "localhost:8888"
-	WsServer = "meta-gateway-test.booyah.cc"
-)
-
-type (
-	Input struct {
-		Method int
-		Count  int
-	}
-
-	User struct {
-		Id    string
-		Token string
-	}
-
-	Resp struct {
-		Code    int    `json:"code"`
-		Message string `json:"message"`
-	}
-
-	MetaJoinReq struct {
-		PartyId   string `json:"partyId"`
-		FollowUid string `json:"followUid"`
-	}
-
-	MetaExitReq struct {
-		PartyId string `json:"partyId"`
-	}
 )
 
 type Service struct {
 	partyCli pb.PartyServiceClient
 	userList []User
-	partyId  string
 	count    int
 	httpCli  *req.Client
+	conf     *Config
 }
 
-func NewService() *Service {
+func NewService(cfg string, count int) *Service {
 	svc := &Service{}
+	svc.conf = loadConfig(cfg)
 
-	conn, err := grpc.Dial("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	svc.httpCli = req.C()
+	svc.userList = loadUser("./simulate/testdata/user.json")
+	svc.count = count
+	conn, err := grpc.Dial(svc.conf.GrpcAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
-
-	svc.httpCli = req.C()
 	svc.partyCli = pb.NewPartyServiceClient(conn)
-	svc.partyId = "31522535"
-	svc.userList = loadUser("./simulate/testdata/user.json")
 
 	return svc
+}
+
+func loadConfig(path string) *Config {
+	viper.SetConfigFile(path)
+	viper.SetConfigType("yaml")
+
+	err := viper.ReadInConfig()
+	cobra.CheckErr(err)
+
+	c := Config{
+		PartyId:  viper.GetString("service.partyId"),
+		HttpAddr: viper.GetString("service.httpAddr"),
+		WsAddr:   viper.GetString("service.wsAddr"),
+		GrpcAddr: viper.GetString("service.grpcAddr"),
+	}
+	return &c
 }
 
 func loadUser(path string) []User {
@@ -96,37 +84,35 @@ func loadUser(path string) []User {
 	return userList
 }
 
-func (s *Service) Handle(in Input) {
-	s.count = in.Count
-
-	switch in.Method {
+func (s *Service) Handle(method int) {
+	switch method {
 	case StressMoveMethod:
-		s.StressMove(in.Count)
+		s.StressMove()
 	default:
 		log.Println("unknown method")
 	}
 }
 
-func (s *Service) StressMove(c int) {
+func (s *Service) StressMove() {
 	interrupt := make(chan os.Signal, 1)
 	stop := make(chan bool)
 	signal.Notify(interrupt, os.Interrupt)
 
-	if c > len(s.userList) {
+	if s.count > len(s.userList) {
 		log.Println("count overflow")
 		return
 	}
 
-	users := s.userList[:c]
+	users := s.userList[:s.count]
 	for _, user := range users {
 		resp := Resp{}
 		_, err := s.httpCli.R().
 			SetHeader("Authorization", "token "+user.Token).
 			SetBodyJsonMarshal(MetaJoinReq{
-				PartyId: s.partyId,
+				PartyId: s.conf.PartyId,
 			}).
 			SetResult(&resp).
-			Post(HttpServer + "/v1/party/meta/join")
+			Post(s.conf.HttpAddr + "/v1/party/meta/join")
 		if err != nil {
 			log.Println(err)
 			return
@@ -136,7 +122,7 @@ func (s *Service) StressMove(c int) {
 			return
 		}
 
-		go NewAgent(user.Id, user.Token).StartMove(stop)
+		go NewAgent(user.Id, user.Token).StartMove(s.conf.WsAddr, stop)
 	}
 
 	<-interrupt
@@ -156,10 +142,10 @@ func (s *Service) Clear() {
 		_, err := s.httpCli.R().
 			SetHeader("Authorization", "token "+user.Token).
 			SetBodyJsonMarshal(MetaExitReq{
-				PartyId: s.partyId,
+				PartyId: s.conf.PartyId,
 			}).
 			SetResult(&resp).
-			Post(HttpServer + "/v1/party/meta/exit")
+			Post(s.conf.HttpAddr + "/v1/party/meta/exit")
 		if err != nil {
 			log.Println(err)
 			return

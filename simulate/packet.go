@@ -2,8 +2,9 @@ package simulate
 
 import (
 	"encoding/binary"
-	"github.com/golang/protobuf/proto"
 	utilbyte "lucy/utils/byte"
+
+	"github.com/golang/protobuf/proto"
 )
 
 var (
@@ -12,6 +13,7 @@ var (
 
 type Packet struct {
 	Version int8
+
 	CmdId   int16
 	BodyLen int32
 	Body    []byte

@@ -1,13 +1,14 @@
 package simulate
 
 import (
-	"github.com/duke-git/lancet/convertor"
-	"github.com/duke-git/lancet/random"
-	"github.com/gorilla/websocket"
 	"log"
 	pb "lucy/proto/MetaGateway"
 	"net/url"
 	"time"
+
+	"github.com/duke-git/lancet/convertor"
+	"github.com/duke-git/lancet/random"
+	"github.com/gorilla/websocket"
 )
 
 const (
@@ -60,8 +61,8 @@ func (a *Agent) SendMessage(c *websocket.Conn, pack Packet) error {
 	return nil
 }
 
-func (a *Agent) StartMove(stop chan bool) {
-	u := url.URL{Scheme: "ws", Host: WsServer, Path: "/echo"}
+func (a *Agent) StartMove(ws string, stop chan bool) {
+	u := url.URL{Scheme: "ws", Host: ws, Path: "/echo"}
 	log.Printf("connecting to %s", u.String())
 
 	c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
