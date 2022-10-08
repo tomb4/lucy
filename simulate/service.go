@@ -25,6 +25,7 @@ type Service struct {
 	count    int
 	httpCli  *req.Client
 	conf     *Config
+	agentMgr *AgentManager
 }
 
 func NewService(cfg string, count int) *Service {
@@ -39,6 +40,7 @@ func NewService(cfg string, count int) *Service {
 		log.Fatalf("did not connect: %v", err)
 	}
 	svc.partyCli = pb.NewPartyServiceClient(conn)
+	svc.agentMgr = NewAgentManager()
 
 	return svc
 }
@@ -115,15 +117,17 @@ func (s *Service) StressMove() {
 			Post(s.conf.HttpAddr + "/v1/party/meta/join")
 		if err != nil {
 			log.Println(err)
-			return
+			continue
 		}
 		if resp.Code != 0 {
 			log.Println(resp.Message)
-			return
+			continue
 		}
 
-		go NewAgent(user.Id, user.Token).StartMove(s.conf.WsAddr, stop)
+		ag := NewAgent(user.Id, user.Token)
+		s.agentMgr.AddAgent(ag)
 	}
+	s.agentMgr.AgentMove(s.conf.WsAddr, stop)
 
 	<-interrupt
 

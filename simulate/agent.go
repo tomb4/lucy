@@ -3,7 +3,7 @@ package simulate
 import (
 	"log"
 	pb "lucy/proto/MetaGateway"
-	"net/url"
+	"strings"
 	"time"
 
 	"github.com/duke-git/lancet/convertor"
@@ -11,10 +11,29 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+type Direction int
+
+type DtAct struct {
+	OffsetX float32
+	OffSetZ float32
+}
+
 const (
-	MetaSceneInitialX = 2
-	MetaSceneInitialY = 3.4
-	MetaSceneInitialZ = 1
+	up    Direction = 1
+	down  Direction = 2
+	left  Direction = 3
+	right Direction = 4
+)
+
+var (
+	DirectionMap = map[Direction]DtAct{
+		up:    {OffsetX: 0, OffSetZ: 2},
+		down:  {OffsetX: 0, OffSetZ: -2},
+		left:  {OffsetX: -2, OffSetZ: 0},
+		right: {OffsetX: 2, OffSetZ: 0},
+	}
+
+	SquareSteps = []Direction{left, up, right, right, down, down, left, left, up, right}
 )
 
 type Agent struct {
@@ -24,6 +43,7 @@ type Agent struct {
 	X      float32
 	Y      float32
 	Z      float32
+	LastDt Direction
 }
 
 func NewAgent(uid string, token string) *Agent {
@@ -38,14 +58,24 @@ func NewAgent(uid string, token string) *Agent {
 	}
 }
 
+func (a *Agent) SetPosition(x, y, z float32) {
+	a.X = x
+	a.Y = y
+	a.Z = z
+}
+
 func (a *Agent) ChangePosition() {
-	a.X += 0.3
-	a.Z += 0.3
-	if a.X > 30 {
-		a.X = MetaSceneInitialX
+	act, ok := DirectionMap[SquareSteps[a.LastDt]]
+	if !ok {
+		return
 	}
-	if a.Z > 20 {
-		a.Z = MetaSceneInitialY
+
+	a.X += act.OffsetX
+	a.Z += act.OffSetZ
+
+	a.LastDt++
+	if int(a.LastDt) >= len(SquareSteps) {
+		a.LastDt = 0
 	}
 }
 
@@ -61,11 +91,8 @@ func (a *Agent) SendMessage(c *websocket.Conn, pack Packet) error {
 	return nil
 }
 
-func (a *Agent) StartMove(ws string, stop chan bool) {
-	u := url.URL{Scheme: "ws", Host: ws, Path: "/echo"}
-	log.Printf("connecting to %s", u.String())
-
-	c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
+func (a *Agent) StartMove(url string, stop chan bool, callback func(uid string)) {
+	c, _, err := websocket.DefaultDialer.Dial(url, nil)
 	if err != nil {
 		log.Fatal("dial:", err)
 	}
@@ -78,10 +105,14 @@ func (a *Agent) StartMove(ws string, stop chan bool) {
 		for {
 			_, message, err := c.ReadMessage()
 			if err != nil {
-				log.Println("read:", err)
+				log.Println("read_err:", err)
 				return
 			}
 			log.Printf("recv: %s", message)
+			if strings.Contains(string(message), "登录失败") {
+				log.Println("登录失败", a.Uid)
+				return
+			}
 		}
 	}()
 
@@ -106,6 +137,9 @@ func (a *Agent) StartMove(ws string, stop chan bool) {
 	for {
 		select {
 		case <-done:
+			log.Println("done -> ", a.Uid)
+			callback(a.UserId)
+			_ = c.WriteMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, ""))
 			return
 		case <-pingTk.C:
 			log.Println("ping...", a.Uid)
@@ -118,7 +152,6 @@ func (a *Agent) StartMove(ws string, stop chan bool) {
 			}
 		case <-ticker.C:
 			log.Println("moving...", a.Uid)
-			a.ChangePosition()
 			err = a.SendMessage(c, NewPacket(int32(pb.CmdId_ClientStateEventReqCmdId), &pb.ClientStateEventReq{
 				User: &pb.UserStateEvent{
 					X:            a.X,
@@ -134,6 +167,7 @@ func (a *Agent) StartMove(ws string, stop chan bool) {
 				log.Println("move write:", err)
 				return
 			}
+			a.ChangePosition()
 		case <-stop:
 			log.Println("interrupt")
 
