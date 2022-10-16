@@ -51,8 +51,8 @@ func (a AgentManager) AgentMove(ws string, stop chan bool) {
 func (a AgentManager) Arrange() {
 	row, col, maxCol, interval := 0, 0, 10, 5
 	for _, v := range a.agentMap.Items() {
-		x := MetaSceneInitialX + row*interval
-		z := MetaSceneInitialZ + col*interval
+		x := MetaSceneInitialX + col*interval
+		z := MetaSceneInitialZ + row*interval
 		v.SetPosition(float32(x), MetaSceneInitialY, float32(z))
 		col++
 		if col >= maxCol {
