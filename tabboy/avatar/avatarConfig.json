@@ -1,0 +1,365 @@
+{
+	"@Tool": "github.com/davyxu/tabtoy",
+	"@Version": "",
+	"AvatarData": [
+		{
+			"ColorList": [
+				"#ebd065",
+				"#372802",
+				"#232323"
+			],
+			"ColorName": "Skin Color",
+			"FirstClass": "面部",
+			"Id": 1,
+			"Name": "skin",
+			"SecondClass": "肤色"
+		},
+		{
+			"ColorList": [
+				"#ebd065",
+				"#372802",
+				"#232323"
+			],
+			"ColorName": "Face Color",
+			"FirstClass": "面部",
+			"Id": 2,
+			"Name": "face",
+			"SecondClass": "五官"
+		},
+		{
+			"ColorList": [
+				"#ebd065",
+				"#372802",
+				"#232323"
+			],
+			"ColorName": "Hair Color",
+			"FirstClass": "面部",
+			"Id": 3,
+			"Name": "hair",
+			"SecondClass": "发型"
+		},
+		{
+			"ColorList": [
+				"#ebd065",
+				"#372802",
+				"#232323"
+			],
+			"ColorName": "Mustache Color",
+			"FirstClass": "面部",
+			"Id": 4,
+			"Name": "mustache",
+			"SecondClass": "胡子"
+		},
+		{
+			"ColorList": [],
+			"ColorName": "",
+			"FirstClass": "上装",
+			"Id": 5,
+			"Name": "clothes",
+			"SecondClass": "衣服"
+		},
+		{
+			"ColorList": [],
+			"ColorName": "",
+			"FirstClass": "上装",
+			"Id": 6,
+			"Name": "coat",
+			"SecondClass": "外套"
+		},
+		{
+			"ColorList": [],
+			"ColorName": "",
+			"FirstClass": "下装",
+			"Id": 7,
+			"Name": "pants",
+			"SecondClass": "下装"
+		},
+		{
+			"ColorList": [],
+			"ColorName": "",
+			"FirstClass": "帽",
+			"Id": 8,
+			"Name": "hat",
+			"SecondClass": "帽"
+		},
+		{
+			"ColorList": [],
+			"ColorName": "",
+			"FirstClass": "鞋",
+			"Id": 9,
+			"Name": "shoes",
+			"SecondClass": "鞋"
+		},
+		{
+			"ColorList": [],
+			"ColorName": "",
+			"FirstClass": "袜",
+			"Id": 10,
+			"Name": "stocks",
+			"SecondClass": "袜"
+		},
+		{
+			"ColorList": [],
+			"ColorName": "",
+			"FirstClass": "背",
+			"Id": 11,
+			"Name": "bag",
+			"SecondClass": "背"
+		},
+		{
+			"ColorList": [],
+			"ColorName": "",
+			"FirstClass": "装饰",
+			"Id": 12,
+			"Name": "knee",
+			"SecondClass": "膝盖"
+		},
+		{
+			"ColorList": [],
+			"ColorName": "",
+			"FirstClass": "装饰",
+			"Id": 13,
+			"Name": "glass",
+			"SecondClass": "眼镜"
+		},
+		{
+			"ColorList": [],
+			"ColorName": "",
+			"FirstClass": "装饰",
+			"Id": 14,
+			"Name": "carrings",
+			"SecondClass": "耳饰"
+		},
+		{
+			"ColorList": [],
+			"ColorName": "",
+			"FirstClass": "装饰",
+			"Id": 15,
+			"Name": "neck",
+			"SecondClass": "颈饰"
+		},
+		{
+			"ColorList": [],
+			"ColorName": "",
+			"FirstClass": "装饰",
+			"Id": 16,
+			"Name": "headgear",
+			"SecondClass": "腕饰"
+		},
+		{
+			"ColorList": [],
+			"ColorName": "",
+			"FirstClass": "手腕",
+			"Id": 17,
+			"Name": "wrist",
+			"SecondClass": "手腕"
+		},
+		{
+			"ColorList": [],
+			"ColorName": "",
+			"FirstClass": "纹身",
+			"Id": 18,
+			"Name": "tattoo",
+			"SecondClass": "纹身"
+		},
+		{
+			"ColorList": [],
+			"ColorName": "",
+			"FirstClass": "套装",
+			"Id": 19,
+			"Name": "suit",
+			"SecondClass": "套装"
+		}
+	],
+	"AvatarElement": [
+		{
+			"AppUri": "",
+			"FirstClass": "面部",
+			"Id": 1,
+			"Name": "",
+			"Params": "",
+			"SecondClass": "肤色",
+			"UnityUri": ""
+		},
+		{
+			"AppUri": "face_001.png",
+			"FirstClass": "面部",
+			"Id": 2,
+			"Name": "face_001",
+			"Params": "[{\"key\":\"Au1BrowlnnerUp\",\"value\":\"0\"},{\"key\":\"Eye_SFFZ_L\",\"value\":\"0\"},{\"key\":\"Nose_PYQH_H\",\"value\":\"0\"},{\"key\":\"Mouth_SFBM_H\",\"value\":\"0\"}]",
+			"SecondClass": "五官",
+			"UnityUri": "face_001"
+		},
+		{
+			"AppUri": "hair_001.png",
+			"FirstClass": "面部",
+			"Id": 3,
+			"Name": "hair_001",
+			"Params": "",
+			"SecondClass": "发型",
+			"UnityUri": "hair_001"
+		},
+		{
+			"AppUri": "bag_001.png",
+			"FirstClass": "背部",
+			"Id": 7,
+			"Name": "bag_001",
+			"Params": "",
+			"SecondClass": "背部",
+			"UnityUri": "bag_001"
+		},
+		{
+			"AppUri": "clothes_001.png",
+			"FirstClass": "上装",
+			"Id": 8,
+			"Name": "clothes_001",
+			"Params": "",
+			"SecondClass": "衣服",
+			"UnityUri": "clothes_001"
+		},
+		{
+			"AppUri": "wrist_001.png",
+			"FirstClass": "手腕",
+			"Id": 9,
+			"Name": "wrist_001",
+			"Params": "",
+			"SecondClass": "手腕",
+			"UnityUri": "wrist_001"
+		},
+		{
+			"AppUri": "wrist_002.png",
+			"FirstClass": "手腕",
+			"Id": 10,
+			"Name": "wrist_002",
+			"Params": "",
+			"SecondClass": "手腕",
+			"UnityUri": "wrist_002"
+		},
+		{
+			"AppUri": "neck_001.png",
+			"FirstClass": "装饰",
+			"Id": 11,
+			"Name": "neck_001",
+			"Params": "",
+			"SecondClass": "颈饰",
+			"UnityUri": "neck_001"
+		},
+		{
+			"AppUri": "carrings_001.png",
+			"FirstClass": "装饰",
+			"Id": 12,
+			"Name": "carrings_001",
+			"Params": "",
+			"SecondClass": "耳饰",
+			"UnityUri": "carrings_001"
+		},
+		{
+			"AppUri": "shoes_001.png",
+			"FirstClass": "鞋",
+			"Id": 13,
+			"Name": "shoes_001",
+			"Params": "",
+			"SecondClass": "鞋",
+			"UnityUri": "shoes_001"
+		},
+		{
+			"AppUri": "pants_001.png",
+			"FirstClass": "下装",
+			"Id": 14,
+			"Name": "pants_001",
+			"Params": "",
+			"SecondClass": "下装",
+			"UnityUri": "pants_001"
+		},
+		{
+			"AppUri": "stocks_001.png",
+			"FirstClass": "袜",
+			"Id": 15,
+			"Name": "stocks_001",
+			"Params": "",
+			"SecondClass": "袜",
+			"UnityUri": "stocks_001"
+		},
+		{
+			"AppUri": "hat_001.png",
+			"FirstClass": "帽",
+			"Id": 16,
+			"Name": "hat_001",
+			"Params": "",
+			"SecondClass": "帽",
+			"UnityUri": "hat_001"
+		},
+		{
+			"AppUri": "knee_001.png",
+			"FirstClass": "装饰",
+			"Id": 17,
+			"Name": "knee_001",
+			"Params": "",
+			"SecondClass": "膝盖",
+			"UnityUri": "knee_001"
+		},
+		{
+			"AppUri": "face_002.png",
+			"FirstClass": "面部",
+			"Id": 18,
+			"Name": "face_002",
+			"Params": "[{\"key\":\"Au1BrowlnnerUp\",\"value\":\"40\"},{\"key\":\"Eye_SFFZ_L\",\"value\":\"30\"},{\"key\":\"Nose_PYQH_H\",\"value\":\"31\"},{\"key\":\"Mouth_SFBM_H\",\"value\":\"21\"}]",
+			"SecondClass": "五官",
+			"UnityUri": "face_002"
+		},
+		{
+			"AppUri": "face_003.png",
+			"FirstClass": "面部",
+			"Id": 19,
+			"Name": "face_003",
+			"Params": "[{\"key\":\"Au1BrowlnnerUp\",\"value\":\"100\"},{\"key\":\"Eye_SFFZ_L\",\"value\":\"30\"},{\"key\":\"Nose_PYQH_H\",\"value\":\"0\"},{\"key\":\"Mouth_SFBM_H\",\"value\":\"100\"}]",
+			"SecondClass": "五官",
+			"UnityUri": "face_003"
+		},
+		{
+			"AppUri": "shoes_002.png",
+			"FirstClass": "鞋",
+			"Id": 20,
+			"Name": "shoes_002",
+			"Params": "",
+			"SecondClass": "鞋",
+			"UnityUri": "shoes_002"
+		},
+		{
+			"AppUri": "bag_002.png",
+			"FirstClass": "背部",
+			"Id": 21,
+			"Name": "bag_002",
+			"Params": "",
+			"SecondClass": "背部",
+			"UnityUri": "bag_002"
+		},
+		{
+			"AppUri": "hat_002.png",
+			"FirstClass": "帽",
+			"Id": 22,
+			"Name": "hat_002",
+			"Params": "",
+			"SecondClass": "帽",
+			"UnityUri": "hat_002"
+		},
+		{
+			"AppUri": "pants_002.png",
+			"FirstClass": "下装",
+			"Id": 23,
+			"Name": "pants_002",
+			"Params": "",
+			"SecondClass": "下装",
+			"UnityUri": "pants_002"
+		},
+		{
+			"AppUri": "clothes_002.png",
+			"FirstClass": "上装",
+			"Id": 24,
+			"Name": "clothes_002",
+			"Params": "",
+			"SecondClass": "衣服",
+			"UnityUri": "clothes_002"
+		}
+	]
+}
