@@ -1,10 +1,11 @@
 package simulate
 
 import (
-	cmap "github.com/orcaman/concurrent-map/v2"
 	"log"
 	"net/url"
 	"time"
+
+	cmap "github.com/orcaman/concurrent-map/v2"
 )
 
 const (

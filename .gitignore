@@ -5,6 +5,7 @@
 *.so
 *.dylib
 .idea
+.fleet
 
 # Test binary, built with `go test -c`
 *.test
