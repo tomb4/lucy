@@ -10,5 +10,5 @@ party.proto
 ```
 protoc --go_out=./MetaGateway --go_opt=paths=source_relative \
 --go-grpc_out=./MetaGateway --go-grpc_opt=paths=source_relative \
-gateway.proto
+MetaGateway.proto
 ```

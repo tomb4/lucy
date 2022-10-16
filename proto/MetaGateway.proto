@@ -14,26 +14,29 @@ enum CmdId{
   LogoutRespCmdId = 16;
   ClientStateEventReqCmdId = 21;
   ClientStateEventRespCmdId = 22;
-
+  ClientSendGiftReqCmdId = 23;
+  ClientSendGiftRespCmdId = 24;
+  
   SendMessageReqCmdId = 31;
   SendMessageRespCmdId = 32;
   SyncMessageReqCmdId = 33;
   SyncMessageRespCmdId = 34;
   SyncHistoryMessageReqCmdId = 35; //拉取历史消息
   SyncHistoryMessageRespCmdId = 36;
-
+  
   //小游戏
   ClientPassThroughEventReqCmdId = 45; //闯关游戏
   ClientPassThroughEventRespCmdId = 46;
-
-
+  
+  
   BroadcastStateEventReqCmdId = 101;
   BroadcastStateEventRespCmdId = 102;
   SceneChangeReqCmdId = 103; //场景切换
   SceneChangeRespCmdId = 104;
+  BroadcastSendGiftReqCmdId = 105;
   BroadcastPassThroughEventReqCmdId = 109; //闯关游戏
   BroadcastPassThroughEventRespCmdId = 110;
-
+  
   SyncMessageNotifyCmdId = 191; //拉消息通知
 }
 
@@ -182,9 +185,9 @@ message UserStateEvent{
 message SceneChangeReq{
   int32 sceneType = 1; //场景类型  1-大厅 5-闯关游戏
   string sceneId = 2; //场景id
-  string rtcId = 3; //rtcId
-  string chatId = 5; //聊天室Id
-  string convId = 7; //会话id
+//  string rtcId = 3; //rtcId
+//  string chatId = 5; //聊天室Id
+//  string convId = 7; //会话id
   int32 exit = 6; //1-退出当前场景
   int32 userId = 4; //客户端忽略，服务端自用    目标用户id，如果此字段存在时忽略sceneId
   int64 reqId = 101; //请求的唯一id，请使用雪花id
@@ -224,10 +227,10 @@ message BroadcastPassThroughEventReq{
 message Box{
   string id = 1; //包厢id  A1 A2? 客户端定义的
   string subspaceId = 2; //服务端定义的卡座id
-  string teamId = 5; //群聊id
-  string rtcId = 3; //
-  string convId = 6; //会话id
+//  string rtcId = 3; //
   map<int32, int32> seat = 4; //座位上的人  如果非0则代表有人
+//  string teamId = 5; //群聊id
+//  string convId = 6; //会话id
 }
 
 //客户端状态变化
@@ -267,6 +270,22 @@ message KickOutReq{
   string connectionId = 3;
 }
 
+
+message ClientSendGiftReq{
+  repeated int32 receiverId = 1;
+  string metaGiftId = 2;
+  int64 reqId = 101; //请求的唯一id，请使用雪花id
+}
+message ClientSendGiftResp{
+  int64 respId = 101; //透传的请求id
+  int32 code = 102; // 如果code!=0 代表本次处理有错误，返回的是错误码
+  string message = 103; // 错误原因
+}
+
+message BroadcastSendGiftReq{
+  string content = 1;//礼物消息内容
+  int64 reqId = 101; //请求的唯一id，请使用雪花id
+}
 
 service MetaGatewayService {
   //踢出某个连接

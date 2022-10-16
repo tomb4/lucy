@@ -108,7 +108,7 @@ func (a *Agent) StartMove(url string, stop chan bool, callback func(uid string))
 				log.Println("read_err:", err)
 				return
 			}
-			log.Printf("recv: %s", message)
+			//log.Printf("recv: %s", message)
 			if strings.Contains(string(message), "登录失败") {
 				log.Println("登录失败", a.Uid)
 				return

@@ -251,5 +251,5 @@ var MetaGatewayService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "gateway.proto",
+	Metadata: "MetaGateway.proto",
 }
