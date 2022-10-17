@@ -11,12 +11,14 @@ type TableEnumValue struct {
 }
 
 type AvatarData struct {
-	Id          int32    `tb_name:"ID"`
-	FirstClass  string   `tb_name:"一级分类"`
-	SecondClass string   `tb_name:"二级分类"`
-	Name        string   `tb_name:"名称"`
-	ColorName   string   `tb_name:"颜色名称"`
-	ColorList   []string `tb_name:"颜色列表"`
+	Id            int32    `tb_name:"ID"`
+	FirstClass    string   `tb_name:"一级分类"`
+	SecondClass   string   `tb_name:"二级分类"`
+	Name          string   `tb_name:"名称"`
+	ColorName     string   `tb_name:"颜色名称"`
+	ColorList     []string `tb_name:"颜色列表"`
+	IsShow        string   `tb_name:"是否展示"`
+	LangIndonesia string   `tb_name:"印尼语"`
 }
 
 type AvatarElement struct {

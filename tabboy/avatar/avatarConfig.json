@@ -11,43 +11,39 @@
 			"ColorName": "Skin Color",
 			"FirstClass": "面部",
 			"Id": 1,
-			"Name": "skin",
+			"IsShow": "是",
+			"LangIndonesia": "Warna Kulit",
+			"Name": "Skin Color",
 			"SecondClass": "肤色"
 		},
 		{
-			"ColorList": [
-				"#ebd065",
-				"#372802",
-				"#232323"
-			],
+			"ColorList": [],
 			"ColorName": "Face Color",
 			"FirstClass": "面部",
 			"Id": 2,
-			"Name": "face",
+			"IsShow": "是",
+			"LangIndonesia": "Wajah",
+			"Name": "Facial",
 			"SecondClass": "五官"
 		},
 		{
-			"ColorList": [
-				"#ebd065",
-				"#372802",
-				"#232323"
-			],
+			"ColorList": [],
 			"ColorName": "Hair Color",
 			"FirstClass": "面部",
 			"Id": 3,
-			"Name": "hair",
+			"IsShow": "是",
+			"LangIndonesia": "Rambut",
+			"Name": "Hair",
 			"SecondClass": "发型"
 		},
 		{
-			"ColorList": [
-				"#ebd065",
-				"#372802",
-				"#232323"
-			],
+			"ColorList": [],
 			"ColorName": "Mustache Color",
 			"FirstClass": "面部",
 			"Id": 4,
-			"Name": "mustache",
+			"IsShow": "否",
+			"LangIndonesia": "Jenggot",
+			"Name": "Beards",
 			"SecondClass": "胡子"
 		},
 		{
@@ -55,7 +51,9 @@
 			"ColorName": "",
 			"FirstClass": "上装",
 			"Id": 5,
-			"Name": "clothes",
+			"IsShow": "是",
+			"LangIndonesia": "Pakaian",
+			"Name": "Clothes",
 			"SecondClass": "衣服"
 		},
 		{
@@ -63,7 +61,9 @@
 			"ColorName": "",
 			"FirstClass": "上装",
 			"Id": 6,
-			"Name": "coat",
+			"IsShow": "是",
+			"LangIndonesia": "Jas",
+			"Name": "Coats",
 			"SecondClass": "外套"
 		},
 		{
@@ -71,7 +71,9 @@
 			"ColorName": "",
 			"FirstClass": "下装",
 			"Id": 7,
-			"Name": "pants",
+			"IsShow": "是",
+			"LangIndonesia": "Celana",
+			"Name": "Pants",
 			"SecondClass": "下装"
 		},
 		{
@@ -79,7 +81,9 @@
 			"ColorName": "",
 			"FirstClass": "帽",
 			"Id": 8,
-			"Name": "hat",
+			"IsShow": "是",
+			"LangIndonesia": "Topi",
+			"Name": "Hat",
 			"SecondClass": "帽"
 		},
 		{
@@ -87,7 +91,9 @@
 			"ColorName": "",
 			"FirstClass": "鞋",
 			"Id": 9,
-			"Name": "shoes",
+			"IsShow": "是",
+			"LangIndonesia": "Sepatu",
+			"Name": "Shoes",
 			"SecondClass": "鞋"
 		},
 		{
@@ -95,23 +101,29 @@
 			"ColorName": "",
 			"FirstClass": "袜",
 			"Id": 10,
-			"Name": "stocks",
+			"IsShow": "是",
+			"LangIndonesia": "Kaos Kaki",
+			"Name": "Socks",
 			"SecondClass": "袜"
 		},
 		{
 			"ColorList": [],
 			"ColorName": "",
-			"FirstClass": "背",
+			"FirstClass": "背部",
 			"Id": 11,
-			"Name": "bag",
-			"SecondClass": "背"
+			"IsShow": "是",
+			"LangIndonesia": "Atribut",
+			"Name": "Props",
+			"SecondClass": "背部"
 		},
 		{
 			"ColorList": [],
 			"ColorName": "",
 			"FirstClass": "装饰",
 			"Id": 12,
-			"Name": "knee",
+			"IsShow": "是",
+			"LangIndonesia": "Lutut",
+			"Name": "Knee",
 			"SecondClass": "膝盖"
 		},
 		{
@@ -119,7 +131,9 @@
 			"ColorName": "",
 			"FirstClass": "装饰",
 			"Id": 13,
-			"Name": "glass",
+			"IsShow": "是",
+			"LangIndonesia": "Kaca Mata",
+			"Name": "Glasses",
 			"SecondClass": "眼镜"
 		},
 		{
@@ -127,7 +141,9 @@
 			"ColorName": "",
 			"FirstClass": "装饰",
 			"Id": 14,
-			"Name": "carrings",
+			"IsShow": "是",
+			"LangIndonesia": "Anting-anting",
+			"Name": "Earrings",
 			"SecondClass": "耳饰"
 		},
 		{
@@ -135,7 +151,9 @@
 			"ColorName": "",
 			"FirstClass": "装饰",
 			"Id": 15,
-			"Name": "neck",
+			"IsShow": "是",
+			"LangIndonesia": "Kalung",
+			"Name": "Necklaces",
 			"SecondClass": "颈饰"
 		},
 		{
@@ -143,7 +161,9 @@
 			"ColorName": "",
 			"FirstClass": "装饰",
 			"Id": 16,
-			"Name": "headgear",
+			"IsShow": "是",
+			"LangIndonesia": "penutup kepala",
+			"Name": "Wristlet",
 			"SecondClass": "腕饰"
 		},
 		{
@@ -151,7 +171,9 @@
 			"ColorName": "",
 			"FirstClass": "手腕",
 			"Id": 17,
-			"Name": "wrist",
+			"IsShow": "是",
+			"LangIndonesia": "Pergelangan tangan",
+			"Name": "Wrist",
 			"SecondClass": "手腕"
 		},
 		{
@@ -159,7 +181,9 @@
 			"ColorName": "",
 			"FirstClass": "纹身",
 			"Id": 18,
-			"Name": "tattoo",
+			"IsShow": "是",
+			"LangIndonesia": "Tato",
+			"Name": "Tattoo",
 			"SecondClass": "纹身"
 		},
 		{
@@ -167,7 +191,9 @@
 			"ColorName": "",
 			"FirstClass": "套装",
 			"Id": 19,
-			"Name": "suit",
+			"IsShow": "是",
+			"LangIndonesia": "Setelan",
+			"Name": "Suit",
 			"SecondClass": "套装"
 		}
 	],
