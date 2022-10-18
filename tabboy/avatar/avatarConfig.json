@@ -4,9 +4,9 @@
 	"AvatarData": [
 		{
 			"ColorList": [
-				"#ebd065",
-				"#372802",
-				"#232323"
+				"#e89d83",
+				"#d9b49e",
+				"#6e330f"
 			],
 			"ColorName": "Skin Color",
 			"FirstClass": "面部",
@@ -14,7 +14,9 @@
 			"IsShow": "是",
 			"LangIndonesia": "Warna Kulit",
 			"Name": "Skin Color",
-			"SecondClass": "肤色"
+			"OpType": 1,
+			"SecondClass": "肤色",
+			"SelectIdx": 0
 		},
 		{
 			"ColorList": [],
@@ -24,27 +26,41 @@
 			"IsShow": "是",
 			"LangIndonesia": "Wajah",
 			"Name": "Facial",
-			"SecondClass": "五官"
+			"OpType": 2,
+			"SecondClass": "五官",
+			"SelectIdx": 0
 		},
 		{
-			"ColorList": [],
+			"ColorList": [
+				"#ebd065",
+				"#372802",
+				"#232323"
+			],
 			"ColorName": "Hair Color",
 			"FirstClass": "面部",
 			"Id": 3,
 			"IsShow": "是",
 			"LangIndonesia": "Rambut",
 			"Name": "Hair",
-			"SecondClass": "发型"
+			"OpType": 3,
+			"SecondClass": "发型",
+			"SelectIdx": 0
 		},
 		{
-			"ColorList": [],
+			"ColorList": [
+				"#ebd065",
+				"#372802",
+				"#232323"
+			],
 			"ColorName": "Mustache Color",
 			"FirstClass": "面部",
 			"Id": 4,
-			"IsShow": "否",
+			"IsShow": "是",
 			"LangIndonesia": "Jenggot",
 			"Name": "Beards",
-			"SecondClass": "胡子"
+			"OpType": 4,
+			"SecondClass": "胡子",
+			"SelectIdx": -1
 		},
 		{
 			"ColorList": [],
@@ -54,7 +70,9 @@
 			"IsShow": "是",
 			"LangIndonesia": "Pakaian",
 			"Name": "Clothes",
-			"SecondClass": "衣服"
+			"OpType": 0,
+			"SecondClass": "衣服",
+			"SelectIdx": 0
 		},
 		{
 			"ColorList": [],
@@ -64,7 +82,9 @@
 			"IsShow": "是",
 			"LangIndonesia": "Jas",
 			"Name": "Coats",
-			"SecondClass": "外套"
+			"OpType": 0,
+			"SecondClass": "外套",
+			"SelectIdx": -1
 		},
 		{
 			"ColorList": [],
@@ -74,7 +94,9 @@
 			"IsShow": "是",
 			"LangIndonesia": "Celana",
 			"Name": "Pants",
-			"SecondClass": "下装"
+			"OpType": 0,
+			"SecondClass": "下装",
+			"SelectIdx": 0
 		},
 		{
 			"ColorList": [],
@@ -84,7 +106,9 @@
 			"IsShow": "是",
 			"LangIndonesia": "Topi",
 			"Name": "Hat",
-			"SecondClass": "帽"
+			"OpType": 0,
+			"SecondClass": "帽",
+			"SelectIdx": -1
 		},
 		{
 			"ColorList": [],
@@ -94,7 +118,9 @@
 			"IsShow": "是",
 			"LangIndonesia": "Sepatu",
 			"Name": "Shoes",
-			"SecondClass": "鞋"
+			"OpType": 0,
+			"SecondClass": "鞋",
+			"SelectIdx": 0
 		},
 		{
 			"ColorList": [],
@@ -104,7 +130,9 @@
 			"IsShow": "是",
 			"LangIndonesia": "Kaos Kaki",
 			"Name": "Socks",
-			"SecondClass": "袜"
+			"OpType": 0,
+			"SecondClass": "袜",
+			"SelectIdx": -1
 		},
 		{
 			"ColorList": [],
@@ -114,7 +142,9 @@
 			"IsShow": "是",
 			"LangIndonesia": "Atribut",
 			"Name": "Props",
-			"SecondClass": "背部"
+			"OpType": 0,
+			"SecondClass": "背部",
+			"SelectIdx": -1
 		},
 		{
 			"ColorList": [],
@@ -124,7 +154,9 @@
 			"IsShow": "是",
 			"LangIndonesia": "Lutut",
 			"Name": "Knee",
-			"SecondClass": "膝盖"
+			"OpType": 0,
+			"SecondClass": "膝盖",
+			"SelectIdx": -1
 		},
 		{
 			"ColorList": [],
@@ -134,7 +166,9 @@
 			"IsShow": "是",
 			"LangIndonesia": "Kaca Mata",
 			"Name": "Glasses",
-			"SecondClass": "眼镜"
+			"OpType": 0,
+			"SecondClass": "眼镜",
+			"SelectIdx": -1
 		},
 		{
 			"ColorList": [],
@@ -144,7 +178,9 @@
 			"IsShow": "是",
 			"LangIndonesia": "Anting-anting",
 			"Name": "Earrings",
-			"SecondClass": "耳饰"
+			"OpType": 0,
+			"SecondClass": "耳饰",
+			"SelectIdx": -1
 		},
 		{
 			"ColorList": [],
@@ -154,7 +190,9 @@
 			"IsShow": "是",
 			"LangIndonesia": "Kalung",
 			"Name": "Necklaces",
-			"SecondClass": "颈饰"
+			"OpType": 0,
+			"SecondClass": "颈饰",
+			"SelectIdx": -1
 		},
 		{
 			"ColorList": [],
@@ -162,9 +200,11 @@
 			"FirstClass": "装饰",
 			"Id": 16,
 			"IsShow": "是",
-			"LangIndonesia": "penutup kepala",
+			"LangIndonesia": "Penutup kepala",
 			"Name": "Wristlet",
-			"SecondClass": "腕饰"
+			"OpType": 0,
+			"SecondClass": "腕饰",
+			"SelectIdx": -1
 		},
 		{
 			"ColorList": [],
@@ -174,7 +214,9 @@
 			"IsShow": "是",
 			"LangIndonesia": "Pergelangan tangan",
 			"Name": "Wrist",
-			"SecondClass": "手腕"
+			"OpType": 0,
+			"SecondClass": "手腕",
+			"SelectIdx": -1
 		},
 		{
 			"ColorList": [],
@@ -184,7 +226,9 @@
 			"IsShow": "是",
 			"LangIndonesia": "Tato",
 			"Name": "Tattoo",
-			"SecondClass": "纹身"
+			"OpType": 0,
+			"SecondClass": "纹身",
+			"SelectIdx": -1
 		},
 		{
 			"ColorList": [],
@@ -194,7 +238,9 @@
 			"IsShow": "是",
 			"LangIndonesia": "Setelan",
 			"Name": "Suit",
-			"SecondClass": "套装"
+			"OpType": 0,
+			"SecondClass": "套装",
+			"SelectIdx": -1
 		}
 	],
 	"AvatarElement": [
@@ -343,15 +389,6 @@
 			"UnityUri": "face_003"
 		},
 		{
-			"AppUri": "shoes_002.png",
-			"FirstClass": "鞋",
-			"Id": 20,
-			"Name": "shoes_002",
-			"Params": "",
-			"SecondClass": "鞋",
-			"UnityUri": "shoes_002"
-		},
-		{
 			"AppUri": "bag_002.png",
 			"FirstClass": "背部",
 			"Id": 21,
@@ -386,6 +423,15 @@
 			"Params": "",
 			"SecondClass": "衣服",
 			"UnityUri": "clothes_002"
+		},
+		{
+			"AppUri": "mustache_001.png",
+			"FirstClass": "面部",
+			"Id": 25,
+			"Name": "mustache_001",
+			"Params": "",
+			"SecondClass": "胡子",
+			"UnityUri": "mustache_001"
 		}
 	]
 }

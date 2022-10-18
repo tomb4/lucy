@@ -19,6 +19,8 @@ type AvatarData struct {
 	ColorList     []string `tb_name:"颜色列表"`
 	IsShow        string   `tb_name:"是否展示"`
 	LangIndonesia string   `tb_name:"印尼语"`
+	OpType        int32    `tb_name:"操作类型"`
+	SelectIdx     int32    `tb_name:"选中项"`
 }
 
 type AvatarElement struct {
