@@ -20,8 +20,8 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-//100以内都是客户端主动发送的
-//100-200是服务端主动发送的
+// 100以内都是客户端主动发送的
+// 100-200是服务端主动发送的
 type CmdId int32
 
 const (
@@ -157,7 +157,7 @@ func (m *Nil) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Nil proto.InternalMessageInfo
 
-//基本数据格式，可以接收所有的数据报文，用来处理一些基础逻辑（比如：全局打印日志、对reqId做重复检测）
+// 基本数据格式，可以接收所有的数据报文，用来处理一些基础逻辑（比如：全局打印日志、对reqId做重复检测）
 type BaseReq struct {
 	ReqId                int64    `protobuf:"varint,101,opt,name=reqId,proto3" json:"reqId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -354,7 +354,7 @@ func (m *Pong) GetMessage() string {
 	return ""
 }
 
-//登陆
+// 登陆
 type LoginReq struct {
 	UserId               int32    `protobuf:"varint,1,opt,name=userId,proto3" json:"userId,omitempty"`
 	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
@@ -1207,13 +1207,15 @@ func (m *SyncMessageNotifyReq) GetReqId() int64 {
 	return 0
 }
 
-//↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ 状态同步相关 ↓ ↓ ↓ ↓
-//message Point{
-//  float x = 1;
-//  float y = 2;
-//  float z = 3;
-//}
-//用户属性
+// ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ 状态同步相关 ↓ ↓ ↓ ↓
+//
+//	message Point{
+//	 float x = 1;
+//	 float y = 2;
+//	 float z = 3;
+//	}
+//
+// 用户属性
 type UserStateEvent struct {
 	//  Point endPoint = 1; //寻路终点
 	//  repeated Point pathPoint = 2; //路径点  当用户寻路发生变化时会更新寻路点，内容是所有的途经点
@@ -1313,7 +1315,7 @@ func (m *UserStateEvent) GetFrom() int32 {
 	return 0
 }
 
-//场景变化
+// 场景变化
 type SceneChangeReq struct {
 	SceneType int32  `protobuf:"varint,1,opt,name=sceneType,proto3" json:"sceneType,omitempty"`
 	SceneId   string `protobuf:"bytes,2,opt,name=sceneId,proto3" json:"sceneId,omitempty"`
@@ -1388,7 +1390,7 @@ func (m *SceneChangeReq) GetReqId() int64 {
 	return 0
 }
 
-//闯关游戏
+// 闯关游戏
 type PassThroughUser struct {
 	User                 *UserStateEvent `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	Pass                 int32           `protobuf:"varint,2,opt,name=pass,proto3" json:"pass,omitempty"`
@@ -1680,7 +1682,7 @@ func (m *BroadcastPassThroughEventReq) GetReqId() int64 {
 	return 0
 }
 
-//卡座包厢
+// 卡座包厢
 type Box struct {
 	Id         string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	SubspaceId string `protobuf:"bytes,2,opt,name=subspaceId,proto3" json:"subspaceId,omitempty"`
@@ -1737,7 +1739,7 @@ func (m *Box) GetSeat() map[int32]int32 {
 	return nil
 }
 
-//客户端状态变化
+// 客户端状态变化
 type ClientStateEventReq struct {
 	User                 *UserStateEvent `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	ReqId                int64           `protobuf:"varint,101,opt,name=reqId,proto3" json:"reqId,omitempty"`
@@ -1840,7 +1842,7 @@ func (m *ClientStateEventResp) GetMessage() string {
 	return ""
 }
 
-//服务端同步状态变化
+// 服务端同步状态变化
 type BroadcastStateEventReq struct {
 	User                 []*UserStateEvent `protobuf:"bytes,1,rep,name=user,proto3" json:"user,omitempty"`
 	Box                  map[string]*Box   `protobuf:"bytes,2,rep,name=box,proto3" json:"box,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
@@ -1959,7 +1961,7 @@ func (m *BroadcastStateEventResp) GetMessage() string {
 	return ""
 }
 
-//踢出连接
+// 踢出连接
 type KickOutReq struct {
 	UserId               int32    `protobuf:"varint,1,opt,name=userId,proto3" json:"userId,omitempty"`
 	Type                 int32    `protobuf:"varint,2,opt,name=type,proto3" json:"type,omitempty"`

@@ -21,8 +21,8 @@
 
 package detour
 
-/// Represents the source data used to build an navigation mesh tile.
-/// @ingroup detour
+// / Represents the source data used to build an navigation mesh tile.
+// / @ingroup detour
 type DtNavMeshCreateParams struct {
 
 	/// @name Polygon Mesh Attributes

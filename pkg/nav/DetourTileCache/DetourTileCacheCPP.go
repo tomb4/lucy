@@ -1,9 +1,9 @@
 package dtcache
 
 import (
+	detour "lucy/pkg/nav/Detour"
 	"math"
 	"unsafe"
-	detour "meta/service/meta.scene/infra/recast/Detour"
 )
 
 const (

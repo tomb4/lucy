@@ -10,7 +10,7 @@ import (
 const (
 	meshMaxNode = 2048
 	pathMaxNode = 256
-	
+
 	NilPolyRef detour.DtPolyRef = 0
 )
 
@@ -58,7 +58,8 @@ func InitNavMesh(path string) (*NavMesh, error) {
 	return m, nil
 }
 
-/**
+/*
+*
 根据起止点寻路
 input: start,end 起止点的坐标
 out: bool-寻路是否成功  []Point 从起点到终点途径的所有点位
@@ -72,18 +73,18 @@ func (m *NavMesh) FindStraightPath(start, end Point) (bool, []Point) {
 	if endRef == 0 {
 		return false, nil
 	}
-	
+
 	path := make([]detour.DtPolyRef, pathMaxNode)
 	pathCount := 0
 	st := m.query.FindPath(startRef, endRef, start.ToF(), end.ToF(), detour.DtAllocDtQueryFilter(), path, &pathCount, pathMaxNode)
 	if !detour.DtStatusSucceed(st) {
 		return false, nil
 	}
-	
+
 	if pathCount == 0 {
 		return false, nil
 	}
-	
+
 	sPath := [pathMaxNode * 3]float32{}
 	sPathFlags := [pathMaxNode]detour.DtStraightPathFlags{}
 	sPathPolys := [pathMaxNode]detour.DtPolyRef{}
@@ -93,7 +94,7 @@ func (m *NavMesh) FindStraightPath(start, end Point) (bool, []Point) {
 	if !detour.DtStatusSucceed(st) {
 		return false, nil
 	}
-	
+
 	ret := make([]Point, 0)
 	for i := 0; i < sPathCount*3; {
 		p := Point{}
@@ -108,7 +109,8 @@ func (m *NavMesh) FindStraightPath(start, end Point) (bool, []Point) {
 	return true, ret
 }
 
-/**
+/*
+*
 进行射线寻路
 input: start,end 起止点的坐标
 out: bool-寻路是否成功  Point 终点点位
@@ -154,7 +156,8 @@ func (m *NavMesh) RayCast(start, end Point) (bool, Point) {
 	return true, hitPos
 }
 
-/**
+/*
+*
 判断某个点是否可达
 */
 func (m *NavMesh) CanReach(pos Point) bool {
@@ -164,7 +167,8 @@ func (m *NavMesh) CanReach(pos Point) bool {
 	return true
 }
 
-/**
+/*
+*
 pos: 根据坐标点获取高度  Y值将被忽略
 */
 func (m *NavMesh) GetPolyHeight(pos Point) (bool, float32) {
@@ -172,7 +176,7 @@ func (m *NavMesh) GetPolyHeight(pos Point) (bool, float32) {
 	if ref == NilPolyRef {
 		return false, 0
 	}
-	
+
 	var h float32
 	st := m.query.GetPolyHeight(ref, pos.ToF(), &h)
 	if !detour.DtStatusSucceed(st) {
@@ -181,7 +185,8 @@ func (m *NavMesh) GetPolyHeight(pos Point) (bool, float32) {
 	return true, h
 }
 
-/**
+/*
+*
 增加障碍物
 */
 func (m *NavMesh) AddObstacle(pos Point, radius, height float32) (bool, dtcache.DtObstacleRef) {
@@ -194,7 +199,8 @@ func (m *NavMesh) AddObstacle(pos Point, radius, height float32) (bool, dtcache.
 	return true, ref
 }
 
-/**
+/*
+*
 删除障碍物
 */
 func (m *NavMesh) RemoveObstacle(ref dtcache.DtObstacleRef) bool {
@@ -206,7 +212,8 @@ func (m *NavMesh) RemoveObstacle(ref dtcache.DtObstacleRef) bool {
 	return true
 }
 
-/**
+/*
+*
 更新
 */
 func (m *NavMesh) TileCacheUpdate() bool {
@@ -220,7 +227,7 @@ func (m *NavMesh) TileCacheUpdate() bool {
 	return true
 }
 
-//根据点查询面的id
+// 根据点查询面的id
 func (m *NavMesh) findNearestPoly(p Point) detour.DtPolyRef {
 	pos := []float32{p.X, p.Y, p.Z}
 	var ref detour.DtPolyRef

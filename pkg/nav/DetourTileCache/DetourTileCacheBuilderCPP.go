@@ -19,9 +19,9 @@
 package dtcache
 
 import (
+	detour "lucy/pkg/nav/Detour"
 	"reflect"
 	"unsafe"
-	detour "meta/service/meta.scene/infra/recast/Detour"
 )
 
 var offsetX = [4]int32{-1, 0, 1, 0}
@@ -1001,10 +1001,10 @@ func area2(a, b, c []uint8) int32 {
 	return (int32(b[0])-int32(a[0]))*(int32(c[2])-int32(a[2])) - (int32(c[0])-int32(a[0]))*(int32(b[2])-int32(a[2]))
 }
 
-//	Exclusive or: true iff exactly one argument is true.
-//	The arguments are negated to ensure that they are 0/1
-//	values.  Then the bitwise Xor operator may apply.
-//	(This idea is due to Michael Baldwin.)
+// Exclusive or: true iff exactly one argument is true.
+// The arguments are negated to ensure that they are 0/1
+// values.  Then the bitwise Xor operator may apply.
+// (This idea is due to Michael Baldwin.)
 func xorb(x, y bool) bool {
 	//return !x ^ !y;
 	if x == y {
@@ -1027,9 +1027,9 @@ func collinear(a, b, c []uint8) bool {
 	return area2(a, b, c) == 0
 }
 
-//	Returns true iff ab properly intersects cd: they share
-//	a point interior to both segments.  The properness of the
-//	intersection is ensured by using strict leftness.
+// Returns true iff ab properly intersects cd: they share
+// a point interior to both segments.  The properness of the
+// intersection is ensured by using strict leftness.
 func intersectProp(a, b, c, d []uint8) bool {
 	// Eliminate improper cases.
 	if collinear(a, b, c) || collinear(a, b, d) ||

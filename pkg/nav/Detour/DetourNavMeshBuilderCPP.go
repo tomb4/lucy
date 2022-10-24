@@ -293,19 +293,19 @@ func classifyOffMeshPoint(pt, bmin, bmax []float32) uint8 {
 	return 0xff
 }
 
-/// Builds navigation mesh tile data from the provided tile creation data.
-/// @ingroup detour
-///  @param[in]		params		Tile creation data.
-///  @param[out]	outData		The resulting tile data.
-///  @param[out]	outDataSize	The size of the tile data array.
-/// @return True if the tile data was successfully created.
-/// @par
-///
-/// The output data array is allocated using the detour allocator (dtAlloc()).  The method
-/// used to free the memory will be determined by how the tile is added to the navigation
-/// mesh.
-///
-/// @see dtNavMesh, dtNavMesh::addTile()
+// / Builds navigation mesh tile data from the provided tile creation data.
+// / @ingroup detour
+// /  @param[in]		params		Tile creation data.
+// /  @param[out]	outData		The resulting tile data.
+// /  @param[out]	outDataSize	The size of the tile data array.
+// / @return True if the tile data was successfully created.
+// / @par
+// /
+// / The output data array is allocated using the detour allocator (dtAlloc()).  The method
+// / used to free the memory will be determined by how the tile is added to the navigation
+// / mesh.
+// /
+// / @see dtNavMesh, dtNavMesh::addTile()
 func DtCreateNavMeshData(params *DtNavMeshCreateParams, outData *[]byte, outDataSize *int) bool {
 	if params.Nvp > DT_VERTS_PER_POLYGON {
 		return false
@@ -733,9 +733,9 @@ func DtCreateNavMeshData(params *DtNavMeshCreateParams, outData *[]byte, outData
 	return true
 }
 
-/// Swaps the endianess of the tile data's header (#dtMeshHeader).
-///  @param[in,out]	data		The tile data array.
-///  @param[in]		dataSize	The size of the data array.
+// / Swaps the endianess of the tile data's header (#dtMeshHeader).
+// /  @param[in,out]	data		The tile data array.
+// /  @param[in]		dataSize	The size of the data array.
 func DtNavMeshHeaderSwapEndian(data []byte, _ int /*dataSize*/) bool {
 	header := (*DtMeshHeader)(unsafe.Pointer(&(data[0])))
 
@@ -780,15 +780,15 @@ func DtNavMeshHeaderSwapEndian(data []byte, _ int /*dataSize*/) bool {
 	return true
 }
 
-/// Swaps endianess of the tile data.
-///  @param[in,out]	data		The tile data array.
-///  @param[in]		dataSize	The size of the data array.
-/// @par
-///
-/// @warning This function assumes that the header is in the correct endianess already.
-/// Call #dtNavMeshHeaderSwapEndian() first on the data if the data is expected to be in wrong endianess
-/// to start with. Call #dtNavMeshHeaderSwapEndian() after the data has been swapped if converting from
-/// native to foreign endianess.
+// / Swaps endianess of the tile data.
+// /  @param[in,out]	data		The tile data array.
+// /  @param[in]		dataSize	The size of the data array.
+// / @par
+// /
+// / @warning This function assumes that the header is in the correct endianess already.
+// / Call #dtNavMeshHeaderSwapEndian() first on the data if the data is expected to be in wrong endianess
+// / to start with. Call #dtNavMeshHeaderSwapEndian() after the data has been swapped if converting from
+// / native to foreign endianess.
 func DtNavMeshDataSwapEndian(data []byte, _ int /*dataSize*/) bool {
 	// Make sure the data is in right format.
 	header := (*DtMeshHeader)(unsafe.Pointer(&(data[0])))

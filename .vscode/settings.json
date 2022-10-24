@@ -1,0 +1,8 @@
+{
+    "go.alternateTools": {
+        "gopls": "gopls"
+    },
+    "go.goroot": "/Users/ltm/sdk/go1.19.2",
+    "go.testEnvVars": {},
+    "go.gopath": "/Users/ltm/go",
+}
