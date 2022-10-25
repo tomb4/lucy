@@ -14,8 +14,7 @@ import (
 var simulateCmd = &cobra.Command{
 	Use:   "simulate",
 	Short: "simulate agent move",
-	Long: `simulate agent move, command method:
-		1-多人移动压测`,
+	Long:  `simulate agent move`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("start simulating", Method)
 
@@ -31,8 +30,8 @@ var (
 
 func init() {
 	simulateCmd.Flags().IntVarP(&Count, "count", "c", 1, "simulate agent count")
-	simulateCmd.Flags().IntVarP(&Method, "method", "m", simulate.StressMoveMethod, "1-多人移动压测")
-	simulateCmd.Flags().StringVarP(&Cfg, "cfg", "f", "./simulate/config/test.yml", "配置文件")
+	simulateCmd.Flags().IntVarP(&Method, "method", "m", simulate.StressMoveMethod, "1-Multi-person mobile pressure measurement")
+	simulateCmd.Flags().StringVarP(&Cfg, "cfg", "f", "./simulate/config/test.yml", "config file")
 
 	rootCmd.AddCommand(simulateCmd)
 }

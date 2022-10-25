@@ -26,7 +26,6 @@ func NewPacket(cmdId int32, body proto.Message) Packet {
 	m, _ := proto.Marshal(body)
 	pack.BodyLen = int32(len(m))
 	pack.Body = m
-	//fmt.Printf("%v\n", pack)
 	return pack
 }
 
