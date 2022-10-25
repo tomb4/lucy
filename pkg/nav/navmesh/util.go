@@ -58,18 +58,18 @@ const TILECACHESET_VERSION int32 = 1
 func LoadStaticMesh(path string) *detour.DtNavMesh {
 	meshData, err := ioutil.ReadFile(path)
 	detour.DtAssert(err == nil)
-	
+
 	header := (*NavMeshSetHeader)(unsafe.Pointer(&(meshData[0])))
 	detour.DtAssert(header.magic == NAVMESHSET_MAGIC)
 	detour.DtAssert(header.version == NAVMESHSET_VERSION)
-	
+
 	//fmt.Printf("boundsMin: %f, %f, %f\n", header.boundsMinX, header.boundsMinY, header.boundsMinZ)
 	//fmt.Printf("boundsMax: %f, %f, %f\n", header.boundsMaxX, header.boundsMaxY, header.boundsMaxZ)
-	
+
 	navMesh := detour.DtAllocNavMesh()
 	state := navMesh.Init(&header.params)
 	detour.DtAssert(detour.DtStatusSucceed(state))
-	
+
 	d := int32(unsafe.Sizeof(*header))
 	for i := 0; i < int(header.numTiles); i++ {
 		tileHeader := (*NavMeshTileHeader)(unsafe.Pointer(&(meshData[d])))
@@ -77,7 +77,7 @@ func LoadStaticMesh(path string) *detour.DtNavMesh {
 			break
 		}
 		d += int32(unsafe.Sizeof(*tileHeader))
-		
+
 		data := meshData[d : d+tileHeader.dataSize]
 		state = navMesh.AddTile(data, int(tileHeader.dataSize), detour.DT_TILE_FREE_DATA, tileHeader.tileRef, nil)
 		detour.DtAssert(detour.DtStatusSucceed(state))
@@ -148,7 +148,7 @@ func (this *MeshProcess) Process(params *detour.DtNavMeshCreateParams, polyAreas
 			polyFlags[i] = POLYFLAGS_WALK | POLYFLAGS_DOOR
 		}
 	}
-	
+
 	// TODO: Pass in off-mesh connections.
 }
 
@@ -162,14 +162,14 @@ func LoadDynamicMesh(path string) (*detour.DtNavMesh, *dtcache.DtTileCache, erro
 	d += int(unsafe.Sizeof(*header))
 	detour.DtAssert(header.magic == TILECACHESET_MAGIC)
 	detour.DtAssert(header.version == TILECACHESET_VERSION)
-	
+
 	navMesh := detour.DtAllocNavMesh()
 	state := navMesh.Init(&header.meshParams)
 	detour.DtAssert(detour.DtStatusSucceed(state))
 	tileCache := dtcache.DtAllocTileCache()
 	state = tileCache.Init(&header.cacheParams, &FastLZCompressor{}, &MeshProcess{})
 	detour.DtAssert(detour.DtStatusSucceed(state))
-	
+
 	for i := 0; i < int(header.numTiles); i++ {
 		tileHeader := (*TileCacheTileHeader)(unsafe.Pointer(&(meshData[d])))
 		d += int(unsafe.Sizeof(*tileHeader))
@@ -184,11 +184,11 @@ func LoadDynamicMesh(path string) (*detour.DtNavMesh, *dtcache.DtTileCache, erro
 		d += int(tileHeader.dataSize)
 		data := make([]byte, tileHeader.dataSize)
 		copy(data, tempData)
-		
+
 		var tile dtcache.DtCompressedTileRef
 		state = tileCache.AddTile(data, tileHeader.dataSize, dtcache.DT_COMPRESSEDTILE_FREE_DATA, &tile)
 		detour.DtAssert(detour.DtStatusSucceed(state))
-		
+
 		if tile != 0 {
 			tileCache.BuildNavMeshTile(tile, navMesh)
 		} else {
@@ -202,7 +202,7 @@ func FindRandomPoint(query *detour.DtNavMeshQuery, filter *detour.DtQueryFilter,
 	randomRef *detour.DtPolyRef, randomPt []float32) detour.DtStatus {
 	m_nav := query.GetAttachedNavMesh()
 	detour.DtAssert(m_nav != nil)
-	
+
 	// Randomly pick one tile. Assume that all tiles cover roughly the same area.
 	tileIndex := int(frand() * float32(m_nav.GetMaxTiles()))
 	var tile *detour.DtMeshTile
@@ -220,7 +220,7 @@ func FindRandomPoint(query *detour.DtNavMeshQuery, filter *detour.DtQueryFilter,
 	var poly *detour.DtPoly
 	var polyRef detour.DtPolyRef
 	base := m_nav.GetPolyRefBase(tile)
-	
+
 	var areaSum float32
 	for i := 0; i < int(tile.Header.PolyCount); i++ {
 		p := &tile.Polys[i]
@@ -241,7 +241,7 @@ func FindRandomPoint(query *detour.DtNavMeshQuery, filter *detour.DtQueryFilter,
 			vc := tile.Verts[p.Verts[j]*3:]
 			polyArea += detour.DtTriArea2D(va, vb, vc)
 		}
-		
+
 		// Choose random polygon weighted by area, using reservoi sampling.
 		areaSum += polyArea
 		u := frand()
@@ -250,7 +250,7 @@ func FindRandomPoint(query *detour.DtNavMeshQuery, filter *detour.DtQueryFilter,
 			polyRef = ref
 		}
 	}
-	
+
 	if poly == nil {
 		return detour.DT_FAILURE
 	}
@@ -263,23 +263,23 @@ func FindRandomPoint(query *detour.DtNavMeshQuery, filter *detour.DtQueryFilter,
 		v = tile.Verts[poly.Verts[j]*3:]
 		detour.DtVcopy(verts[j*3:], v)
 	}
-	
+
 	s := frand()
 	t := frand()
-	
+
 	var pt [3]float32
 	detour.DtRandomPointInConvexPoly(verts[:], int(poly.VertCount), areas[:], s, t, pt[:])
-	
+
 	var h float32
 	status := query.GetPolyHeight(polyRef, pt[:], &h)
 	if detour.DtStatusFailed(status) {
 		return status
 	}
 	pt[1] = h
-	
+
 	detour.DtVcopy(randomPt, pt[:])
 	*randomRef = polyRef
-	
+
 	return detour.DT_SUCCESS
 }
 

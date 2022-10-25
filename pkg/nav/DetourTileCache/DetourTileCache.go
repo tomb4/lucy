@@ -1,14 +1,14 @@
 package dtcache
 
 import (
-	detour "meta/service/meta.scene/infra/recast/Detour"
+	detour "lucy/pkg/nav/Detour"
 )
 
 type DtObstacleRef uint32
 
 type DtCompressedTileRef uint32
 
-/// Flags for AddTile
+// / Flags for AddTile
 const (
 	DT_COMPRESSEDTILE_FREE_DATA = 0x01 ///< Navmesh owns the tile memory and should free it.
 )
@@ -137,35 +137,35 @@ func (this *DtTileCache) GetTile(i int) *DtCompressedTile        { return &this.
 func (this *DtTileCache) GetObstacleCount() int                  { return int(this.m_params.MaxObstacles) }
 func (this *DtTileCache) GetObstacle(i int) *DtTileCacheObstacle { return &this.m_obstacles[i] }
 
-/// Encodes a tile id.
+// / Encodes a tile id.
 func (this *DtTileCache) EncodeTileId(salt, it uint32) DtCompressedTileRef {
 	return (DtCompressedTileRef(salt) << this.m_tileBits) | DtCompressedTileRef(it)
 }
 
-/// Decodes a tile salt.
+// / Decodes a tile salt.
 func (this *DtTileCache) DecodeTileIdSalt(ref DtCompressedTileRef) uint32 {
 	saltMask := (DtCompressedTileRef(1) << this.m_saltBits) - 1
 	return uint32((ref >> this.m_tileBits) & saltMask)
 }
 
-/// Decodes a tile id.
+// / Decodes a tile id.
 func (this *DtTileCache) DecodeTileIdTile(ref DtCompressedTileRef) uint32 {
 	tileMask := (DtCompressedTileRef(1) << this.m_tileBits) - 1
 	return uint32(ref & tileMask)
 }
 
-/// Encodes an obstacle id.
+// / Encodes an obstacle id.
 func (this *DtTileCache) EncodeObstacleId(salt, it uint32) DtObstacleRef {
 	return (DtObstacleRef(salt) << 16) | DtObstacleRef(it)
 }
 
-/// Decodes an obstacle salt.
+// / Decodes an obstacle salt.
 func (this *DtTileCache) DecodeObstacleIdSalt(ref DtObstacleRef) uint32 {
 	saltMask := (DtObstacleRef(1) << 16) - 1
 	return uint32((ref >> 16) & saltMask)
 }
 
-/// Decodes an obstacle id.
+// / Decodes an obstacle id.
 func (this *DtTileCache) DecodeObstacleIdObstacle(ref DtObstacleRef) uint32 {
 	tileMask := (DtObstacleRef(1) << 16) - 1
 	return uint32(ref & tileMask)

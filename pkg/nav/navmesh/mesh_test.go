@@ -43,7 +43,7 @@ func Test_RayCast(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		res, point := navMesh.RayCast(coordinateTrans(tt.startPos[:]), coordinateTrans(tt.endPos[:]))
+		res, point := navMesh.RayCast(CoordinateTrans(tt.startPos[:]), CoordinateTrans(tt.endPos[:]))
 		assert.Equal(t, res, tt.result)
 		t.Log(point)
 	}
@@ -99,7 +99,7 @@ func TestNavMesh_FindStraightPath(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		ok, points := navMesh.FindStraightPath(coordinateTrans(tt.startPos[:]), coordinateTrans(tt.endPos[:]))
+		ok, points := navMesh.FindStraightPath(CoordinateTrans(tt.startPos[:]), CoordinateTrans(tt.endPos[:]))
 		t.Log(ok)
 		t.Log(points)
 	}
